@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mv.mvQuiz.Dto.MvQuestionDTO;
+import com.mv.mvQuiz.Dto.MvQuestionSetDTO;
 import com.mv.mvQuiz.Response.GeneralResponse;
 import com.mv.mvQuiz.Service.MvQuestionService;
 
@@ -32,6 +33,11 @@ public class QuestionController {
     @DeleteMapping("/question/{id}")
     public GeneralResponse deleteQuestionById(@PathVariable("id") String id) {
 	return questionService.removeQuestion(Integer.parseInt(id));
+    }
+    
+    @PostMapping("/questionset")
+    public GeneralResponse addQuestionSet(@RequestBody MvQuestionSetDTO questionSet) {
+	return questionService.addQuestionSet(questionSet);
     }
 
     @GetMapping("/questionset/{quesSetName}")

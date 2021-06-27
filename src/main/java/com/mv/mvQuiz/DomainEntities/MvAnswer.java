@@ -23,7 +23,7 @@ public class MvAnswer {
 	private String optionValue;
 	private String ansString;
 
-	@OneToOne
+	@ManyToOne
 	private MvQuestion question;
 
 	@ManyToOne

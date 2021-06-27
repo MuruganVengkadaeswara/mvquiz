@@ -13,7 +13,7 @@ public class MvQuizGlobalExceptionHandler {
     GeneralResponse handler(Exception e) {
 	GeneralResponse response = new GeneralResponse();
 	response.setStatus(Status.FAILURE.toString());
-	response.setError(e.getMessage());
+	response.setError(e.getLocalizedMessage());
 	return response;
     }
 

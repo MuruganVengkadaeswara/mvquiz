@@ -12,5 +12,6 @@ public class MvQuestionDTO {
 	private String quesType;
 	private String quesString;
 	private List<String> options;
+	private List<MvAnswerDTO> answers;
 
 }

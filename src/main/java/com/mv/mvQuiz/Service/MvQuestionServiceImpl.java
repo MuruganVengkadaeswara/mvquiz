@@ -1,12 +1,11 @@
 package com.mv.mvQuiz.Service;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mv.mvQuiz.Constants.MvQuizConstants;
 import com.mv.mvQuiz.Constants.Status;
 import com.mv.mvQuiz.DomainEntities.MvQuestion;
@@ -27,15 +26,18 @@ public class MvQuestionServiceImpl implements MvQuestionService {
     @Autowired
     MvQuestionSetRepository questionSetRepository;
 
+    @Autowired
+    ObjectMapper mapper;
+
     @Override
     public GeneralResponse addQuestion(MvQuestionDTO question) throws MvQuizException {
 
 	GeneralResponse response = new GeneralResponse();
 	if (isValidQuestion(question)) {
 	    MvQuestion questionEntity = new MvQuestion();
-	    BeanUtils.copyProperties(question, questionEntity);
+	    questionEntity = mapper.convertValue(question, MvQuestion.class);
 	    questionRepository.save(questionEntity);
-	    BeanUtils.copyProperties(questionEntity, question);
+	    question = mapper.convertValue(questionEntity, MvQuestionDTO.class);
 	    response.setResponse(question);
 	    response.setStatus(Status.SUCCESS.toString());
 	} else {
@@ -50,8 +52,7 @@ public class MvQuestionServiceImpl implements MvQuestionService {
 	Optional<MvQuestion> question = questionRepository.findById(questionId);
 	if (question.isPresent()) {
 	    GeneralResponse response = new GeneralResponse();
-	    MvQuestionDTO questionDTO = new MvQuestionDTO();
-	    BeanUtils.copyProperties(question, questionDTO);
+	    MvQuestionDTO questionDTO = mapper.convertValue(question, MvQuestionDTO.class);
 	    response.setResponse(questionDTO);
 	    return response;
 	} else {
@@ -81,8 +82,7 @@ public class MvQuestionServiceImpl implements MvQuestionService {
 	GeneralResponse response = new GeneralResponse();
 	Optional<MvQuestionSet> questionSet = questionSetRepository.findByQuesSetName(questionSetName);
 	if (questionSet.isPresent()) {
-	    MvQuestionSetDTO questionSetDTO = new MvQuestionSetDTO();
-	    BeanUtils.copyProperties(questionSet, questionSetDTO);
+	    MvQuestionSetDTO questionSetDTO = mapper.convertValue(questionSet, MvQuestionSetDTO.class);
 	    response.setResponse(questionSetDTO);
 	    return response;
 	} else {
@@ -109,14 +109,40 @@ public class MvQuestionServiceImpl implements MvQuestionService {
     public GeneralResponse addQuestionSet(MvQuestionSetDTO questionSet) throws MvQuizException {
 
 	GeneralResponse response = new GeneralResponse();
-	MvQuestionSet qSet = new MvQuestionSet();
+	MvQuestionSet qSet;
 	if (isValidQuestionSet(questionSet)) {
-	    BeanUtils.copyProperties(questionSet, qSet);
+	    qSet = mapper.convertValue(questionSet, MvQuestionSet.class);
 	    questionSetRepository.save(qSet);
-	    BeanUtils.copyProperties(qSet, questionSet);
+	    questionSet = mapper.convertValue(qSet, MvQuestionSetDTO.class);
 	    response.setResponse(questionSet);
 	}
 	return response;
+    }
+
+    @Override
+    public GeneralResponse updateQuestion(MvQuestionDTO question) throws MvQuizException {
+
+	GeneralResponse response = new GeneralResponse();
+
+	Optional<MvQuestion> questionEntity = questionRepository.findById(question.getQuesId());
+	if (questionEntity.isPresent()) {
+	    MvQuestion ques = questionEntity.get();
+	    ques = mapper.convertValue(question, MvQuestion.class);
+	    questionRepository.save(ques);
+	    response.setResponse(mapper.convertValue(ques, MvQuestionDTO.class));
+	    return response;
+	} else {
+	    throw new MvQuizException(MvQuizConstants.QUESTION_NOT_FOUND);
+	}
+
+    }
+
+    @Override
+    public GeneralResponse updateQuestionSet(MvQuestionSetDTO questionSet) throws MvQuizException {
+
+	GeneralResponse response = new GeneralResponse();
+
+	return null;
     }
 
     private boolean isValidQuestionSet(MvQuestionSetDTO questionSetDTO) {

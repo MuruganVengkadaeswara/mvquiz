@@ -2,6 +2,7 @@ package com.mv.mvQuiz.Service;
 
 import org.springframework.stereotype.Service;
 
+import com.mv.mvQuiz.DomainEntities.MvQuestion;
 import com.mv.mvQuiz.Dto.MvQuestionDTO;
 import com.mv.mvQuiz.Dto.MvQuestionSetDTO;
 import com.mv.mvQuiz.Exceptions.MvQuizException;
@@ -21,5 +22,9 @@ public interface MvQuestionService {
 	public GeneralResponse removeQuestionSetByName(String questionSetName) throws MvQuizException;
 
 	public GeneralResponse addQuestionSet(MvQuestionSetDTO questionSet) throws MvQuizException;
+	
+	public GeneralResponse updateQuestionSet(MvQuestionSetDTO questionSet) throws MvQuizException;
+	
+	public GeneralResponse updateQuestion(MvQuestionDTO question) throws MvQuizException;
 
 }
