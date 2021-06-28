@@ -14,9 +14,8 @@ public class MvQuizConstants {
     public static String QUESTION_SET_NAME_PRESENT_ALREADY = "Question set with name %s! is already present , please choose another name";
     public static String QUESTION_IS_INVALID = "The question %s is invalid";
     public static String QUESTION_SET_NAME_IS_MANDATORY = "Question Set Name is mandatory";
-    
-    
-    
+    public static String PROVIDE_QUESTION_SET_ID_OR_NAME = "Please provide question set id or name";
+
     /*
      * Answer Service
      */

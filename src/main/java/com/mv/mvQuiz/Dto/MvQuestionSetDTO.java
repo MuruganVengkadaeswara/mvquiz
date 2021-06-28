@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class MvQuestionSetDTO {
 
-	private int quesSetId;
+	private Integer quesSetId;
 
 	private String quesSetName;
 

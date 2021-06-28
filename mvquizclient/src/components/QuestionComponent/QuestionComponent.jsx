@@ -13,4 +13,4 @@ const QuestionComponent = ({ questionData }) => {
   );
 };
 
-export default QuestionComponent;
+export default React.memo(QuestionComponent);

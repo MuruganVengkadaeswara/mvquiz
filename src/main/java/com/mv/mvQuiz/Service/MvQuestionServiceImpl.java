@@ -126,8 +126,8 @@ public class MvQuestionServiceImpl implements MvQuestionService {
 
 	Optional<MvQuestion> questionEntity = questionRepository.findById(question.getQuesId());
 	if (questionEntity.isPresent()) {
-	    MvQuestion ques = questionEntity.get();
-	    ques = mapper.convertValue(question, MvQuestion.class);
+	    MvQuestion ques = mapper.convertValue(question, MvQuestion.class);
+	    ques.setQuesId(questionEntity.get().getQuesId());
 	    questionRepository.save(ques);
 	    response.setResponse(mapper.convertValue(ques, MvQuestionDTO.class));
 	    return response;
@@ -141,6 +141,22 @@ public class MvQuestionServiceImpl implements MvQuestionService {
     public GeneralResponse updateQuestionSet(MvQuestionSetDTO questionSet) throws MvQuizException {
 
 	GeneralResponse response = new GeneralResponse();
+	Optional<MvQuestionSet> questionSetEntity;
+
+	if (null != questionSet.getQuesSetId()) {
+	    questionSetEntity = questionSetRepository.findById(questionSet.getQuesSetId());
+	} else if (null != questionSet.getQuesSetName()) {
+	    questionSetEntity = questionSetRepository.findByQuesSetName(questionSet.getQuesSetName());
+	} else {
+	    throw new MvQuizException(MvQuizConstants.PROVIDE_QUESTION_SET_ID_OR_NAME);
+	}
+
+	if (questionSetEntity.isPresent()) {
+	    MvQuestionSet queSet = mapper.convertValue(questionSet, MvQuestionSet.class);
+	    queSet.setQuesSetId(questionSetEntity.get().getQuesSetId());
+	    questionSetRepository.save(queSet);
+
+	}
 
 	return null;
     }
