@@ -184,7 +184,12 @@ const HomeComponent = ({ userData }) => {
         <Divider />
         <List>
           {userSettingSecondary.map((data) => (
-            <ListItem button key={data.settingName}>
+            <ListItem
+              button
+              key={data.settingName}
+              component={Link}
+              to={data.url}
+            >
               <ListItemIcon key={data.settingName}>{data.icon}</ListItemIcon>
               <ListItemText primary={data.settingName} key={data.settingName} />
             </ListItem>

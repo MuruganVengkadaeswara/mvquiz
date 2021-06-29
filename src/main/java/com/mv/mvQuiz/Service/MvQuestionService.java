@@ -26,5 +26,7 @@ public interface MvQuestionService {
 	public GeneralResponse updateQuestionSet(MvQuestionSetDTO questionSet) throws MvQuizException;
 	
 	public GeneralResponse updateQuestion(MvQuestionDTO question) throws MvQuizException;
+	
+	public GeneralResponse getQuestionSetwithAnswersByName(String questionSetName) throws MvQuizException;
 
 }

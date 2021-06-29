@@ -45,6 +45,7 @@ const userSettingSecondary = [
   {
     settingName: "Post a Test Set",
     icon: <EmailRoundedIcon />,
+    url:"/posttest"
   },
   {
     settingName: "Write to us",

@@ -12,6 +12,7 @@ import {
 import MyAccountUser from "./components/MyAccountComponent/MyAccountUser";
 import HomeContents from "./components/HomeComponent/HomeContents";
 import TestSets from "./components/TestSetComponents/TestSet/TestSet";
+import AddQuestion from "./components/AddQuestionComponent/AddQuestion";
 
 function App() {
   const questionData = {
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/" component={HomeContents} />
         <Route path="/myaccount" component={MyAccountUser} />
         <Route path="/testsets" component={TestSets} />
+        <Route path="/posttest" component={AddQuestion}/>
       </Router>
       {/* <HomeComponent /> */}
       {/* <MyAccountUser/> */}

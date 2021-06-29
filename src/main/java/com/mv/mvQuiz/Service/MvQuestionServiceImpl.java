@@ -160,6 +160,20 @@ public class MvQuestionServiceImpl implements MvQuestionService {
 
 	return null;
     }
+    
+    
+    @Override
+    public GeneralResponse getQuestionSetwithAnswersByName(String questionSetName) throws MvQuizException {
+	GeneralResponse response = new GeneralResponse();
+	Optional<MvQuestionSet> questionSet = questionSetRepository.findByQuesSetName(questionSetName);
+	if (questionSet.isPresent()) {
+	    MvQuestionSetDTO questionSetDTO = mapper.convertValue(questionSet, MvQuestionSetDTO.class);
+	    response.setResponse(questionSetDTO);
+	    return response;
+	} else {
+	    throw new MvQuizException(MvQuizConstants.QUESTION_SET_NOT_FOUND);
+	}
+    }
 
     private boolean isValidQuestionSet(MvQuestionSetDTO questionSetDTO) {
 	if (null != questionSetDTO.getQuesSetName()) {
